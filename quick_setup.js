@@ -1,5 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // 0. Create Ambient Background Effects
+    (function createAmbientEffects() {
+        // Floating particles
+        const particlesCanvas = document.createElement('div');
+        particlesCanvas.className = 'particles-canvas';
+        document.body.prepend(particlesCanvas);
+
+        for (let i = 0; i < 25; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 4 + 2;
+            const hue = Math.random() > 0.5 ? '217, 119, 87' : '37, 99, 235';
+            particle.style.cssText = `
+                width: ${size}px; height: ${size}px;
+                left: ${Math.random() * 100}%;
+                background: rgba(${hue}, ${0.3 + Math.random() * 0.4});
+                animation-duration: ${12 + Math.random() * 20}s;
+                animation-delay: ${-Math.random() * 20}s;
+                box-shadow: 0 0 ${size * 3}px rgba(${hue}, 0.3);
+            `;
+            particlesCanvas.appendChild(particle);
+        }
+
+        // Ambient orbs
+        for (let i = 0; i < 3; i++) {
+            const orb = document.createElement('div');
+            orb.className = 'ambient-orb';
+            document.body.prepend(orb);
+        }
+    })();
+
     // 1. Theme and Flow Master Toggle Logic
     const body = document.body;
     const flowSn = document.getElementById('flow-servicenow');
@@ -238,6 +269,19 @@ document.addEventListener('DOMContentLoaded', () => {
         URL.revokeObjectURL(url);
     };
 
+    // 7. Scroll-Reveal for elements inside step-content
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
 
+    document.querySelectorAll('.step-content .command-group, .step-content .bento-card, .step-content .info-card, .step-content .data-table, .step-content .split-panel, .step-content .model-hero, .step-content .folder-struct').forEach(el => {
+        el.classList.add('reveal-on-scroll');
+        revealObserver.observe(el);
+    });
 
 });
