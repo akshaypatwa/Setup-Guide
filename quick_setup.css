@@ -161,15 +161,16 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; color: var(--text-main);
 .wizard-step.play-animation .stagger-4 { animation: slideUpFade 0.4s 0.35s forwards; opacity: 0; }
 .wizard-step.play-animation .stagger-5 { animation: slideUpFade 0.4s 0.45s forwards; opacity: 0; }
 
-.step-header { margin-bottom: 24px; border-bottom: 2px solid rgba(0,0,0,0.04); padding-bottom: 16px; position: relative;}
-.step-header h1 { font-size: 2.2rem; margin-bottom: 8px; color: var(--text-main); padding-right: 120px; letter-spacing: -1px;} 
+.step-header { margin-bottom: 24px; border-bottom: 2px solid rgba(0,0,0,0.04); padding-bottom: 16px; }
+.step-header h1 { font-size: 2.2rem; margin-bottom: 8px; color: var(--text-main); letter-spacing: -1px;} 
 .step-desc { font-size: 15.5px; color: var(--text-muted); max-width: 700px; line-height: 1.6;}
 
-.step-eyebrow { 
-    position: absolute; top: 10px; right: 0;
-    font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--btn-text); 
-    text-transform: uppercase; letter-spacing: 2px; background: var(--accent); 
-    padding: 6px 16px; border-radius: 20px; box-shadow: 0 4px 10px var(--glow-color); 
+.step-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--btn-text);
+    text-transform: uppercase; letter-spacing: 2px; background: var(--accent);
+    padding: 5px 14px; border-radius: 20px; box-shadow: 0 4px 10px var(--glow-color);
+    margin-bottom: 14px;
 }
 
 .step-content { flex: 1; overflow-y: auto; padding-right: 15px; padding-bottom: 20px; }
@@ -343,21 +344,22 @@ pre { padding: 16px 0; margin: 0; overflow-x: auto; flex:1; }
     .wizard-container { flex-direction: column; height: auto; min-height: 100vh; min-height: 100dvh; max-height: none; }
     body { height: auto; min-height: 100vh; min-height: 100dvh; overflow: auto; }
     .wizard-sidebar { width: 100%; padding: 16px; border-right: none; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-    .step-list { flex-direction: row; overflow-x: auto; padding-bottom: 5px; gap: 12px; }
+    .step-list { flex-direction: row; overflow-x: auto; overflow-y: visible; padding: 10px 4px; gap: 12px; -webkit-overflow-scrolling: touch; }
     .step-list::before { display: none; }
     .step-name { display: none; }
-    .step-item { opacity: 0.7; }
+    .step-item { opacity: 0.7; flex-shrink: 0; }
     .step-item.active, .step-item.completed { opacity: 1; }
     .step-item.active { transform: none; }
     .step-item:hover { transform: none; }
+    .step-indicator { width: 36px; height: 36px; font-size: 13px; box-shadow: 0 0 0 4px var(--card-bg); }
+    .step-item.active .step-indicator { box-shadow: 0 0 0 4px var(--accent-light); }
     .flow-container.active { display: flex; flex-direction: column; }
     .wizard-main { flex: 1; min-height: 0; overflow: visible; }
     #steps-container-sn, #steps-container-cl { overflow: visible; flex: 1; }
     .wizard-step { position: relative; padding: 24px 20px; transform: none !important; }
     .wizard-step:not(.active) { display: none; }
     .wizard-step.active { display: flex; opacity: 1; visibility: visible; }
-    .step-header h1 { padding-right: 0; font-size: 1.6rem; }
-    .step-header .step-eyebrow { position: static; margin-bottom: 12px; display: inline-block; }
+    .step-header h1 { font-size: 1.6rem; }
     .step-content { overflow-y: visible; padding-right: 0; }
     .folder-struct { flex-direction: column; gap: 20px; padding: 24px; }
     .split-table { flex-direction: column; }
@@ -374,8 +376,9 @@ pre { padding: 16px 0; margin: 0; overflow-x: auto; flex:1; }
     .sidebar-toggles { flex-direction: row; gap: 6px; margin-bottom: 12px; }
     .side-btn { padding: 10px 12px; font-size: 13px; justify-content: center; }
     .side-btn i { font-size: 16px; }
-    .step-indicator { width: 32px; height: 32px; font-size: 12px; }
-    .step-list { gap: 8px; }
+    .step-indicator { width: 32px; height: 32px; font-size: 12px; box-shadow: 0 0 0 3px var(--card-bg); }
+    .step-item.active .step-indicator { box-shadow: 0 0 0 3px var(--accent-light); }
+    .step-list { gap: 8px; padding: 8px 4px; }
     .wizard-step { padding: 16px 14px; }
     .step-header { margin-bottom: 16px; padding-bottom: 12px; }
     .step-header h1 { font-size: 1.3rem; letter-spacing: -0.5px; }
