@@ -492,36 +492,61 @@ code .</code></pre>
                                     Think of a <strong>Skill file</strong> as a permanent cheat-sheet you hand Claude once. It tells Claude the name of your app, how to build and deploy it, and what the app actually does — so you never have to explain it again at the start of a new session.
                                 </p>
 
-                                <!-- "What's inside" breakdown card -->
+                                <!-- Meta note -->
                                 <div class="info-card" style="margin-bottom:16px;">
-                                    <i class="fa-solid fa-circle-info"></i>
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
                                     <div>
-                                        <strong>What does this prompt ask Claude to do?</strong>
-                                        <ul style="margin:8px 0 0 0; padding-left:18px; line-height:1.8;">
-                                            <li><strong>Read your project files</strong> — Claude opens <code>now.config.json</code> and <code>package.json</code> to grab your actual app name, version, and settings. You don't type any of that.</li>
-                                            <li><strong>Document the build commands</strong> — Claude records what <code>npm run build</code>, <code>deploy</code>, <code>types</code>, and <code>transform</code> each do, so it never confuses them when helping you later.</li>
-                                            <li><strong>Learn the file rules</strong> — Claude notes which files are "Fluent" definition files and the one rule it must never break: every new file must be listed in <code>index.now.ts</code> or it gets skipped silently at deploy time.</li>
-                                            <li><strong>Understand the app</strong> — Claude learns what your 4 tables are, what the automated jobs do, and which user roles exist, so it can make sensible decisions without you explaining it every time.</li>
-                                        </ul>
+                                        <strong>The skill file is always unique to your project.</strong>
+                                        The prompt below is tailored to the Society sample app we use in this guide. If you're building a different app, the skill file should reflect <em>your</em> tables, automation, and app context — not ours.<br><br>
+                                        <strong>How we built this prompt:</strong> We asked Claude to inspect the project files and write the skill prompt itself. You can do the same for your own project — run <strong>Step A</strong> below first to let Claude generate a prompt tailored to your app, then use that output in <strong>Step B</strong>.
                                     </div>
                                 </div>
 
-                                <!-- No-edit callout -->
-                                <div class="info-card warning-card" style="margin-bottom:16px;">
-                                    <i class="fa-solid fa-copy"></i>
-                                    <div>
-                                        <strong>Just copy and paste — no editing needed.</strong>
-                                        Claude reads your actual project files to fill in the real values. You don't need to understand or change any of the text below.
+                                <!-- Step A: Generate your own prompt -->
+                                <div style="margin-bottom:24px;">
+                                    <div class="command-label" style="font-size:13px; margin-bottom:8px;"><i class="fa-solid fa-a text-accent"></i> Step A — Ask Claude to build your skill prompt <span style="opacity:0.6; font-weight:400;">(skip if you're following the Society sample)</span></div>
+                                    <p class="command-desc" style="margin-bottom:10px;">Paste this into Claude Code. It will inspect your project and output a ready-to-use skill prompt. Copy that output and use it in Step B.</p>
+                                    <div class="cmd-item type-cl">
+                                        <div class="prompt-block" id="skill-gen-prompt-block">
+                                            <div class="prompt-header"><i class="fa-solid fa-asterisk"></i> Claude Code Prompt:</div>
+                                            <pre><code>Look at my project's now.config.json, package.json, and src/ folder structure.
+
+Then write me a Claude Code skill file prompt that captures:
+1. My app identity (name, scope prefix, SDK version, auth alias)
+2. The SDK build/deploy/types/transform commands and what each one does
+3. Any file structure rules that are easy to get wrong (e.g. index exports, naming conventions)
+4. My app's core tables, automation logic, and user roles
+
+Output only the prompt text — I'll use it in the next step to create the skill file.</code></pre>
+                                            <div class="prompt-actions">
+                                                <button class="btn-download" onclick="downloadPrompt('skill-gen-prompt-block', 'generate-skill-prompt.txt')"><i class="fa-solid fa-download"></i> Download</button>
+                                                <button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="cmd-item type-cl">
-                                    <div class="cmd-meta">
-                                        <div class="cmd-title"><i class="fa-regular fa-comment-dots"></i> Paste into Claude Code</div>
+                                <!-- Step B: Use prompt to create skill file -->
+                                <div style="margin-bottom:8px;">
+                                    <div class="command-label" style="font-size:13px; margin-bottom:8px;"><i class="fa-solid fa-b text-accent"></i> Step B — Create the skill file</div>
+                                    <p class="command-desc" style="margin-bottom:10px;">Paste the prompt Claude gave you in Step A (or copy the Society sample below if you're following this guide). Claude will read your project files and write the skill file automatically.</p>
+
+                                    <!-- No-edit callout -->
+                                    <div class="info-card warning-card" style="margin-bottom:16px;">
+                                        <i class="fa-solid fa-copy"></i>
+                                        <div>
+                                            <strong>Following the Society sample? Just copy and paste — no editing needed.</strong>
+                                            Claude reads your actual project files to fill in the real values.
+                                        </div>
                                     </div>
-                                    <div class="prompt-block" id="skill-prompt-block">
-                                        <div class="prompt-header"><i class="fa-solid fa-asterisk"></i> Claude Code Prompt:</div>
-                                        <pre><code>Create a skill file at .claude/skills/society.md for this project.
+
+                                    <div class="cmd-item type-cl">
+                                        <div class="cmd-meta">
+                                            <div class="cmd-title"><i class="fa-regular fa-comment-dots"></i> Paste into Claude Code</div>
+                                        </div>
+                                        <div class="prompt-block" id="skill-prompt-block">
+                                            <div class="prompt-header"><i class="fa-solid fa-asterisk"></i> Claude Code Prompt (Society sample reference):</div>
+                                            <pre><code>Create a skill file at .claude/skills/society.md for this project.
 
 Read now.config.json and package.json to get the real app values, then write a
 skill that covers:
@@ -540,7 +565,7 @@ skill that covers:
    - If you create a file and forget to export it, it will be silently skipped at deploy time
 
 4. App context:
-   Society & Apartment Management System (India-Focused).
+   Society &amp; Apartment Management System (India-Focused).
    Replaces WhatsApp groups and Excel sheets with a proper ServiceNow app.
 
    4 core tables:
@@ -559,9 +584,10 @@ skill that covers:
    - Scheduled Job (monthly 1st): auto-creates bill records for all active flats
 
    Roles: resident, committee_member, admin.</code></pre>
-                                        <div class="prompt-actions">
-                                            <button class="btn-download" onclick="downloadPrompt('skill-prompt-block', 'skill-file-prompt.txt')"><i class="fa-solid fa-download"></i> Download</button>
-                                            <button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button>
+                                            <div class="prompt-actions">
+                                                <button class="btn-download" onclick="downloadPrompt('skill-prompt-block', 'skill-file-prompt.txt')"><i class="fa-solid fa-download"></i> Download</button>
+                                                <button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -571,7 +597,7 @@ skill that covers:
                                     <i class="fa-solid fa-check-circle"></i>
                                     <div>
                                         <strong>What Claude will do after you paste this:</strong>
-                                        It reads your project files, then creates a file at <code>.claude/skills/society.md</code>. From that point on, every Claude session in this project automatically loads that file — Claude already knows your app without you saying a word.
+                                        It reads your project files, then creates a skill file at <code>.claude/skills/</code>. From that point on, every Claude session in this project automatically loads that file — Claude already knows your app without you saying a word.
                                     </div>
                                 </div>
                             </div>
