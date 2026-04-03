@@ -486,7 +486,35 @@ code .</code></pre>
 
                             <div class="command-group stagger-3">
                                 <div class="command-label"><i class="fa-solid fa-brain text-accent"></i> Prompt 1 — Create the Skill File</div>
-                                <p class="command-desc">A <strong>Skill file</strong> at <code>.claude/skills/society.md</code> is a persistent briefing — it stores your project identity, SDK commands, and structure rules. Claude loads it automatically at the start of every session so you never have to re-explain your project.</p>
+
+                                <!-- Plain-English explanation -->
+                                <p class="command-desc">
+                                    Think of a <strong>Skill file</strong> as a permanent cheat-sheet you hand Claude once. It tells Claude the name of your app, how to build and deploy it, and what the app actually does — so you never have to explain it again at the start of a new session.
+                                </p>
+
+                                <!-- "What's inside" breakdown card -->
+                                <div class="info-card" style="margin-bottom:16px;">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <div>
+                                        <strong>What does this prompt ask Claude to do?</strong>
+                                        <ul style="margin:8px 0 0 0; padding-left:18px; line-height:1.8;">
+                                            <li><strong>Read your project files</strong> — Claude opens <code>now.config.json</code> and <code>package.json</code> to grab your actual app name, version, and settings. You don't type any of that.</li>
+                                            <li><strong>Document the build commands</strong> — Claude records what <code>npm run build</code>, <code>deploy</code>, <code>types</code>, and <code>transform</code> each do, so it never confuses them when helping you later.</li>
+                                            <li><strong>Learn the file rules</strong> — Claude notes which files are "Fluent" definition files and the one rule it must never break: every new file must be listed in <code>index.now.ts</code> or it gets skipped silently at deploy time.</li>
+                                            <li><strong>Understand the app</strong> — Claude learns what your 4 tables are, what the automated jobs do, and which user roles exist, so it can make sensible decisions without you explaining it every time.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- No-edit callout -->
+                                <div class="info-card warning-card" style="margin-bottom:16px;">
+                                    <i class="fa-solid fa-copy"></i>
+                                    <div>
+                                        <strong>Just copy and paste — no editing needed.</strong>
+                                        Claude reads your actual project files to fill in the real values. You don't need to understand or change any of the text below.
+                                    </div>
+                                </div>
+
                                 <div class="cmd-item type-cl">
                                     <div class="cmd-meta">
                                         <div class="cmd-title"><i class="fa-regular fa-comment-dots"></i> Paste into Claude Code</div>
@@ -535,6 +563,15 @@ skill that covers:
                                             <button class="btn-download" onclick="downloadPrompt('skill-prompt-block', 'skill-file-prompt.txt')"><i class="fa-solid fa-download"></i> Download</button>
                                             <button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button>
                                         </div>
+                                    </div>
+                                </div>
+
+                                <!-- What happens next -->
+                                <div class="info-card" style="margin-top:16px;">
+                                    <i class="fa-solid fa-check-circle"></i>
+                                    <div>
+                                        <strong>What Claude will do after you paste this:</strong>
+                                        It reads your project files, then creates a file at <code>.claude/skills/society.md</code>. From that point on, every Claude session in this project automatically loads that file — Claude already knows your app without you saying a word.
                                     </div>
                                 </div>
                             </div>
