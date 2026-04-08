@@ -517,6 +517,8 @@ Then write me a Claude Code skill file prompt that captures:
 3. Any file structure rules that are easy to get wrong (e.g. index exports, naming conventions)
 4. My app's core tables, automation logic, and user roles
 
+The skill file must be created at .claude/skills/&lt;your-app-name&gt;/SKILL.md (folder named after the app, file named SKILL.md in all caps).
+
 Output only the prompt text — I'll use it in the next step to create the skill file.</code></pre>
                                             <div class="prompt-actions">
                                                 <button class="btn-download" onclick="downloadPrompt('skill-gen-prompt-block', 'generate-skill-prompt.txt')"><i class="fa-solid fa-download"></i> Download</button>
@@ -546,7 +548,7 @@ Output only the prompt text — I'll use it in the next step to create the skill
                                         </div>
                                         <div class="prompt-block" id="skill-prompt-block">
                                             <div class="prompt-header"><i class="fa-solid fa-asterisk"></i> Claude Code Prompt (Society sample reference):</div>
-                                            <pre><code>Create a skill file at .claude/skills/society.md for this project.
+                                            <pre><code>Create a skill file at .claude/skills/society/SKILL.md for this project.
 
 Read now.config.json and package.json to get the real app values, then write a
 skill that covers:
@@ -597,7 +599,7 @@ skill that covers:
                                     <i class="fa-solid fa-check-circle"></i>
                                     <div>
                                         <strong>What Claude will do after you paste this:</strong>
-                                        It reads your project files, then creates a skill file at <code>.claude/skills/</code>. From that point on, every Claude session in this project automatically loads that file — Claude already knows your app without you saying a word.
+                                        It reads your project files, then creates a skill file at <code>.claude/skills/society/SKILL.md</code>. From that point on, every Claude session in this project automatically loads that file — Claude already knows your app without you saying a word.
                                     </div>
                                 </div>
                             </div>
@@ -1141,7 +1143,12 @@ Menu items:
                                         <div><i class="fa-solid fa-bookmark file"></i><span class="file">reference.md</span></div>
                                         <div><i class="fa-solid fa-code file"></i><span class="file">mcp.json</span></div>
                                         <div><i class="fa-solid fa-folder dir"></i><span class="dir">skills/</span></div>
-                                        <div style="margin-left:20px;"><i class="fa-solid fa-gear file"></i><span class="file">style-checks.md</span></div>
+                                        <div style="margin-left:20px;"><i class="fa-solid fa-folder dir"></i><span class="dir">society/</span></div>
+                                        <div style="margin-left:40px;"><i class="fa-solid fa-file-lines core"></i><span class="core">SKILL.md</span></div>
+                                        <div style="margin-left:40px;"><i class="fa-solid fa-folder dir"></i><span class="dir">references/</span></div>
+                                        <div style="margin-left:60px;"><i class="fa-solid fa-bookmark file"></i><span class="file">tables.md</span></div>
+                                        <div style="margin-left:60px;"><i class="fa-solid fa-bookmark file"></i><span class="file">roles.md</span></div>
+                                        <div style="margin-left:60px;"><i class="fa-solid fa-bookmark file"></i><span class="file">server-automation.md</span></div>
                                         <div><i class="fa-solid fa-folder dir"></i><span class="dir">hooks/</span></div>
                                         <div style="margin-left:20px;"><i class="fa-brands fa-js file"></i><span class="file">lint-check.js</span></div>
                                     </div>
@@ -1175,8 +1182,8 @@ Menu items:
                                     <div class="bento-body"><strong>The Project Governor.</strong> Resides in `.claude/`. Dictates the absolute unbreakable rules of the application (e.g. "Never use Tailwind", "Always write tests"). <strong>Use when:</strong> Establishing permanent architectural tones.</div>
                                 </div>
                                 <div class="bento-card">
-                                    <div class="bento-title"><div class="bento-icon"><i class="fa-solid fa-brain"></i></div> skills/ (& *.md)</div>
-                                    <div class="bento-body"><strong>Executable Workflows.</strong> Individual markdown files holding exact terminal scripts and validation logic (e.g., `test-skill.md`). <strong>Use when:</strong> You want Claude to run a validation script before moving on.</div>
+                                    <div class="bento-title"><div class="bento-icon"><i class="fa-solid fa-brain"></i></div> skills/&lt;usecase&gt;/SKILL.md</div>
+                                    <div class="bento-body"><strong>Executable Workflows.</strong> Each usecase gets its own folder under <code>skills/</code> containing a <code>SKILL.md</code> and an optional <code>references/</code> subfolder. <strong>Use when:</strong> You want Claude to carry permanent project context across every session.</div>
                                 </div>
                                 <div class="bento-card">
                                     <div class="bento-title"><div class="bento-icon"><i class="fa-solid fa-plug-circle-bolt"></i></div> MCP Protocol</div>
@@ -1218,7 +1225,7 @@ Menu items:
                                 <!-- Panel 2: Context -->
                                 <div class="split-panel">
                                     <h3><i class="fa-solid fa-book-bookmark text-accent"></i> Persistent Context (.md)</h3>
-                                    <p style="margin-bottom:20px; font-size:14px; opacity:0.8;">Hardcoded rules inside <code>claude.md</code>, <code>skills</code>, and <code>reference.md</code> that the AI loops over and digests automatically to establish permanent truths.</p>
+                                    <p style="margin-bottom:20px; font-size:14px; opacity:0.8;">Hardcoded rules inside <code>claude.md</code> and <code>skills/&lt;usecase&gt;/SKILL.md</code> (with supporting <code>references/</code>) that the AI loops over and digests automatically to establish permanent truths.</p>
                                     <ul>
                                         <li><strong>Enforcing framework choices</strong> (e.g. Always use standard ServiceNow classes instead of custom wrappers).</li>
                                         <li><strong>Supplying large Vendor Documentation</strong> (e.g. Pasting SDK release notes for correct API consumption).</li>
@@ -1229,7 +1236,7 @@ Menu items:
 
                             <div class="info-card warning-card stagger-3">
                                 <i class="fa-solid fa-triangle-exclamation"></i>
-                                <div><strong>The Overload Rule:</strong> Avoid turning <code>claude.md</code> into a dump. If the persistent context spans past 200 lines, abstract it into smaller <code>skills.md</code> chunks. Heavy context drowns out immediate prompt efficacy!</div>
+                                <div><strong>The Overload Rule:</strong> Avoid turning <code>claude.md</code> into a dump. If the persistent context spans past 200 lines, abstract it into smaller <code>SKILL.md</code> files under <code>skills/&lt;usecase&gt;/</code>. Heavy context drowns out immediate prompt efficacy!</div>
                             </div>
 
                         </div>
